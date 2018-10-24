@@ -1,4 +1,4 @@
-package br.com.wcisang.domain.interactor
+package br.com.wcisang.domain.interactor.browse
 
 import br.com.wcisang.domain.executor.PostExecutionThread
 import br.com.wcisang.domain.interactor.browse.GetProjects
