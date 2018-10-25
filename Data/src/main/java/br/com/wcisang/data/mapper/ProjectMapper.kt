@@ -4,7 +4,7 @@ import br.com.wcisang.domain.model.Project
 import br.com.wcisang.data.model.ProjectEntity
 import javax.inject.Inject
 
-class ProjectMapper @Inject constructor() : EntityMapper<ProjectEntity, Project> {
+open class ProjectMapper @Inject constructor() : EntityMapper<ProjectEntity, Project> {
 
 
     override fun mapFromEntity(entity: ProjectEntity): Project {
