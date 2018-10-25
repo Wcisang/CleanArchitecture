@@ -1,4 +1,4 @@
-package br.com.wcisang.data.test.factory
+package br.com.wcisang.remote.test.factory
 
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
