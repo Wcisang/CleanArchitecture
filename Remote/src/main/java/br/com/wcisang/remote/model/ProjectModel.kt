@@ -1,0 +1,11 @@
+package br.com.wcisang.remote.model
+
+import com.google.gson.annotations.SerializedName
+
+class ProjectModel(val name: String, @SerializedName("full_name") val fullName: String,
+                   @SerializedName("stargazers_count") val startCount: Int,
+                   @SerializedName("created_at") val dateCreated: String,
+                   val owner: OwnerModel) {
+
+
+}
