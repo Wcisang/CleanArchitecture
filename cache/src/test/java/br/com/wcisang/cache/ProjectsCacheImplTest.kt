@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room
 import br.com.wcisang.cache.db.ProjectsDatabase
 import br.com.wcisang.cache.mapper.CachedProjectMapper
 import br.com.wcisang.cache.test.factory.ProjectDataFactory
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,6 +25,11 @@ class ProjectsCacheImplTest {
 
     private val mapper = CachedProjectMapper()
     private val cache = ProjectsCacheImpl(database, mapper)
+
+    @After
+    fun close(){
+        database.close()
+    }
 
     @Test
     fun clearProjectsCompletes() {
@@ -45,6 +51,62 @@ class ProjectsCacheImplTest {
 
         val testObserver = cache.getProjects().test()
         testObserver.assertValue(projects)
+    }
+
+    @Test
+    fun getBookmarkedProjectsReturnsData() {
+        var project = ProjectDataFactory.makeCachedBookmarkedProjectEntity()
+        val projects = listOf(project)
+        cache.saveProjects(projects).test()
+
+        val testObserver = cache.getBookmarkedProjects().test()
+        testObserver.assertValue(projects)
+    }
+
+    @Test
+    fun setProjectAsBookmarkedCompletes() {
+        val projects = listOf(ProjectDataFactory.makeProjectEntity())
+        cache.saveProjects(projects).test()
+
+        val testObserver = cache.setProjectAsBookmarked(projects[0].id).test()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun setProjectAsUnbookmarkedCompletes() {
+        val projects = listOf(ProjectDataFactory.makeProjectEntity())
+        cache.saveProjects(projects).test()
+
+        val testObserver = cache.setProjectAsUnbookmarked(projects[0].id).test()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun areProjectsCacheReturnsData() {
+        val projects = listOf(ProjectDataFactory.makeProjectEntity())
+        cache.saveProjects(projects).test()
+
+        val testObserver = cache.areProjectsCached().test()
+        testObserver.assertValue(true)
+    }
+
+    @Test
+    fun setLatCacheTimeCompletes() {
+        val testObserver = cache.setLastCacheTime(1000L).test()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun isProjectsCacheExpiredReturnsExpired() {
+        val testObserver = cache.isProjectsCacheExpired().test()
+        testObserver.assertValue(true)
+    }
+
+    @Test
+    fun isProjectsCacheExpiredReturnsNotExpired() {
+        cache.setLastCacheTime(System.currentTimeMillis()).test()
+        val testObserver = cache.isProjectsCacheExpired().test()
+        testObserver.assertValue(false)
     }
 
 }
