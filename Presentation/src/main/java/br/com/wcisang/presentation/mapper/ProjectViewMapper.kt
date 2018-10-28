@@ -6,7 +6,7 @@ import br.com.wcisang.presentation.model.ProjectView
 /**
  * Created by WCisang on 28/10/2018.
  */
-class ProjectViewMapper : Mapper<ProjectView, Project> {
+open class ProjectViewMapper : Mapper<ProjectView, Project> {
 
     override fun mapToView(type: Project): ProjectView {
         return ProjectView(type.id, type.name, type.fullName, type.starCount,

@@ -9,7 +9,7 @@ import javax.inject.Inject
 /**
  * Created by WCisang on 23/10/2018.
  */
-class BookmarkProject @Inject constructor(
+open class BookmarkProject @Inject constructor(
         private val projectsRepository: ProjectsRepository,
         postExecutionThread: PostExecutionThread
 ): CompletableUseCase<BookmarkProject.Params>(postExecutionThread){

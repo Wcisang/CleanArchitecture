@@ -45,7 +45,7 @@ class BrowserBookmarkedProjectsViewModel @Inject constructor(
         }
 
         override fun onError(e: Throwable) {
-            liveData.postValue(Resource(ResourceState.SUCCESS, message = e.localizedMessage))
+            liveData.postValue(Resource(ResourceState.ERROR, message = e.localizedMessage))
         }
 
     }

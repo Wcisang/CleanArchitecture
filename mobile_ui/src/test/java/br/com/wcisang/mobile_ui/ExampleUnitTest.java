@@ -1,4 +1,4 @@
-package br.com.wcisang.presentation;
+package br.com.wcisang.mobile_ui;
 
 import org.junit.Test;
 
