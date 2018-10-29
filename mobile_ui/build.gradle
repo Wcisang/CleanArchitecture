@@ -96,3 +96,5 @@ dependencies {
     kaptTest mobileUiDependencies.daggerCompiler
     kaptAndroidTest mobileUiDependencies.daggerCompiler
 }
+
+apply plugin: 'kotlin-android-extensions'
