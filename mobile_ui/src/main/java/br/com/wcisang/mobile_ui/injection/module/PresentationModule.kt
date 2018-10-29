@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import br.com.wcisang.mobile_ui.injection.ViewModelFactory
 import br.com.wcisang.presentation.BrowseProjectsViewModel
+import br.com.wcisang.presentation.BrowserBookmarkedProjectsViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -20,6 +21,11 @@ abstract class PresentationModule {
     @IntoMap
     @ViewModelKey(BrowseProjectsViewModel::class)
     abstract fun bindBrowseProjectsViewModel(viewModel: BrowseProjectsViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BrowserBookmarkedProjectsViewModel::class)
+    abstract fun bindBrowseBookmarkedProjectsViewModel(viewModel: BrowserBookmarkedProjectsViewModel) : ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory) : ViewModelProvider.Factory
