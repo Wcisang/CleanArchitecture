@@ -3,6 +3,7 @@ package br.com.wcisang.mobile_ui.injection
 import android.app.Application
 import br.com.wcisang.mobile_ui.GithubTrendingApplication
 import br.com.wcisang.mobile_ui.injection.module.*
+import br.com.wcisang.mobile_ui.test.TestApplication
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -24,4 +25,6 @@ interface TestApplicationComponent {
 
         fun build() : TestApplicationComponent
     }
+
+    fun inject(application: TestApplication)
 }
