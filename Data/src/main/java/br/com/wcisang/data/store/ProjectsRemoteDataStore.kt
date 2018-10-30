@@ -4,6 +4,7 @@ import br.com.wcisang.data.model.ProjectEntity
 import br.com.wcisang.data.repository.ProjectsDataStore
 import br.com.wcisang.data.repository.ProjectsRemote
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ open class ProjectsRemoteDataStore @Inject constructor(
         throw UnsupportedOperationException("Saving projects ins't supported here...")
     }
 
-    override fun getProjects(): Observable<List<ProjectEntity>> {
+    override fun getProjects(): Flowable<List<ProjectEntity>> {
         return projectsRemote.getProjects()
     }
 

@@ -7,7 +7,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
 import android.view.View
+import br.com.wcisang.mobile_ui.R
 import br.com.wcisang.mobile_ui.injection.ViewModelFactory
 import br.com.wcisang.mobile_ui.mapper.ProjectViewMapper
 import br.com.wcisang.presentation.BrowserBookmarkedProjectsViewModel
@@ -33,11 +35,14 @@ class BookmarkedActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_bookmarked)
         AndroidInjection.inject(this)
 
         browseViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(BrowserBookmarkedProjectsViewModel::class.java)
         setupBrowseRecycler()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
     }
 
     override fun onStart() {
@@ -50,18 +55,32 @@ class BookmarkedActivity : AppCompatActivity() {
 
     private fun setupBrowseRecycler() {
         recycler_projects.layoutManager = LinearLayoutManager(this)
+        recycler_projects.adapter = adapter
     }
 
     private fun handleDataState(resource: Resource<List<ProjectView>>?) {
         when (resource?.status) {
             ResourceState.SUCCESS -> {
-                progress.visibility = View.VISIBLE
                 progress.visibility = View.GONE
+                recycler_projects.visibility = View.VISIBLE
+                resource.data?.let {
+                    adapter.projects = it.map { mapper.mapToView(it) }
+                    adapter.notifyDataSetChanged()
+                }
             }
             ResourceState.LOADING -> {
                 progress.visibility = View.VISIBLE
-                progress.visibility = View.GONE
+                recycler_projects.visibility = View.GONE
             }
+        }
+    }
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when(item?.itemId) {
+           android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

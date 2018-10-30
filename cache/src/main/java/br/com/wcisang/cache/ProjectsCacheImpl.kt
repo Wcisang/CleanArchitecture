@@ -6,6 +6,7 @@ import br.com.wcisang.cache.model.Config
 import br.com.wcisang.data.model.ProjectEntity
 import br.com.wcisang.data.repository.ProjectsCache
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.toSingle
@@ -33,8 +34,8 @@ class ProjectsCacheImpl @Inject constructor(
         }
     }
 
-    override fun getProjects(): Observable<List<ProjectEntity>> {
-        return projectsDatabase.cachedProjectsDao().getProjects().toObservable()
+    override fun getProjects(): Flowable<List<ProjectEntity>> {
+        return projectsDatabase.cachedProjectsDao().getProjects()
                 .map { it.map {
                     mapper.mapFromCached(it)
                 } }

@@ -4,6 +4,7 @@ import br.com.wcisang.data.model.ProjectEntity
 import br.com.wcisang.data.repository.ProjectsCache
 import br.com.wcisang.data.repository.ProjectsDataStore
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -20,7 +21,7 @@ open class ProjectsCacheDataStore @Inject constructor(
                 .andThen(projectsCache.setLastCacheTime(System.currentTimeMillis()))
     }
 
-    override fun getProjects(): Observable<List<ProjectEntity>> {
+    override fun getProjects(): Flowable<List<ProjectEntity>> {
         return projectsCache.getProjects()
     }
 

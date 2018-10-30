@@ -24,5 +24,7 @@
 
         </activity>
 
+        <activity android:name=".bookmarked.BookmarkedActivity" android:label="Bookmarked"/>
+
     </application>
 </manifest>

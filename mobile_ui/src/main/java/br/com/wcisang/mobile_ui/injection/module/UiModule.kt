@@ -2,6 +2,7 @@ package br.com.wcisang.mobile_ui.injection.module
 
 import br.com.wcisang.domain.executor.PostExecutionThread
 import br.com.wcisang.mobile_ui.UiThread
+import br.com.wcisang.mobile_ui.bookmarked.BookmarkedActivity
 import br.com.wcisang.mobile_ui.browse.BrowseActivity
 import dagger.Binds
 import dagger.Module
@@ -18,4 +19,7 @@ abstract class UiModule {
 
     @ContributesAndroidInjector
     abstract fun contributesBrowseActivity() : BrowseActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributesBookmarkedeActivity() : BookmarkedActivity
 }

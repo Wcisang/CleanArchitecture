@@ -20,7 +20,8 @@ class ProjectsDataRepository @Inject constructor(
         return Observable.zip(cache.areProjectsCached().toObservable(), cache.isProjectsCacheExpired().toObservable(),
                 BiFunction<Boolean, Boolean, Pair<Boolean, Boolean>> { areCached, isExpired ->  Pair(areCached, isExpired)})
                 .flatMap {
-                    factory.getDataStore(it.first, it.second).getProjects()
+                    factory.getDataStore(it.first, it.second).getProjects().toObservable()
+                            .distinctUntilChanged()
                 }
                 .flatMap { projects ->
                     factory.getCacheDataStore()

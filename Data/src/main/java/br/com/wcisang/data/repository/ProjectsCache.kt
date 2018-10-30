@@ -2,6 +2,7 @@ package br.com.wcisang.data.repository
 
 import br.com.wcisang.data.model.ProjectEntity
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -11,7 +12,7 @@ interface ProjectsCache {
 
     fun saveProjects(projects: List<ProjectEntity>) : Completable
 
-    fun getProjects() : Observable<List<ProjectEntity>>
+    fun getProjects() : Flowable<List<ProjectEntity>>
 
     fun getBookmarkedProjects() : Observable<List<ProjectEntity>>
 

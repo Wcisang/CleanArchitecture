@@ -4,6 +4,7 @@ import br.com.wcisang.data.model.ProjectEntity
 import br.com.wcisang.data.repository.ProjectsRemote
 import br.com.wcisang.remote.mapper.ProjectsReponseModelMapper
 import br.com.wcisang.remote.service.GithubTrendingService
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -12,7 +13,7 @@ class ProjectsRemoteImpl @Inject constructor(
         private val mapper: ProjectsReponseModelMapper
 ) :  ProjectsRemote{
 
-    override fun getProjects(): Observable<List<ProjectEntity>> {
+    override fun getProjects(): Flowable<List<ProjectEntity>> {
         return service.searchRepositories("language:kotlin", "stars", "desc")
                 .map {
                     it.items.map {
