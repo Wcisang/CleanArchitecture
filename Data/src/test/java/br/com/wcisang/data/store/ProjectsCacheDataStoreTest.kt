@@ -9,6 +9,7 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import org.junit.Test
 
@@ -22,7 +23,7 @@ class ProjectsCacheDataStoreTest {
 
     @Test
     fun getProjectsCompletes () {
-        stubProjectsCacheGetProjects(Observable.just(listOf(ProjectFactory.makeProjectEntity())))
+        stubProjectsCacheGetProjects(Flowable.just(listOf(ProjectFactory.makeProjectEntity())))
         val testObservable = store.getProjects().test()
         testObservable.assertComplete()
     }
@@ -30,14 +31,14 @@ class ProjectsCacheDataStoreTest {
     @Test
     fun getProjectsReturnsData () {
         val data = listOf(ProjectFactory.makeProjectEntity())
-        stubProjectsCacheGetProjects(Observable.just(data))
+        stubProjectsCacheGetProjects(Flowable.just(data))
         val testObservable = store.getProjects().test()
         testObservable.assertValue(data)
     }
 
     @Test
     fun getProjectsCallsCacheSource () {
-        stubProjectsCacheGetProjects(Observable.just(listOf(ProjectFactory.makeProjectEntity())))
+        stubProjectsCacheGetProjects(Flowable.just(listOf(ProjectFactory.makeProjectEntity())))
         store.getProjects().test()
         verify(cache).getProjects()
     }
@@ -130,7 +131,7 @@ class ProjectsCacheDataStoreTest {
                 .thenReturn(completable)
     }
 
-    private fun stubProjectsCacheGetProjects(observable: Observable<List<ProjectEntity>>) {
+    private fun stubProjectsCacheGetProjects(observable: Flowable<List<ProjectEntity>>) {
         whenever(cache.getProjects())
                 .thenReturn(observable)
     }

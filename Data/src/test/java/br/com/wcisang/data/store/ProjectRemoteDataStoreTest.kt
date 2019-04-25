@@ -6,6 +6,7 @@ import br.com.wcisang.data.test.factory.ProjectFactory
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import org.junit.Test
 
@@ -19,7 +20,7 @@ class ProjectRemoteDataStoreTest {
 
     @Test
     fun getProjectsComplete() {
-        stubRemoteGetProjects(Observable.just(listOf(ProjectFactory.makeProjectEntity())))
+        stubRemoteGetProjects(Flowable.just(listOf(ProjectFactory.makeProjectEntity())))
         val testObservable = store.getProjects().test()
         testObservable.assertComplete()
     }
@@ -27,7 +28,7 @@ class ProjectRemoteDataStoreTest {
     @Test
     fun getProjectsReturnsData() {
         val data = listOf(ProjectFactory.makeProjectEntity())
-        stubRemoteGetProjects(Observable.just(data))
+        stubRemoteGetProjects(Flowable.just(data))
         val testObservable = store.getProjects().test()
         testObservable.assertValue(data)
     }
@@ -35,12 +36,12 @@ class ProjectRemoteDataStoreTest {
     @Test
     fun getProjectsRemoteCalls() {
         val data = listOf(ProjectFactory.makeProjectEntity())
-        stubRemoteGetProjects(Observable.just(data))
+        stubRemoteGetProjects(Flowable.just(data))
         store.getProjects().test()
         verify(remote).getProjects()
     }
 
-    private fun stubRemoteGetProjects(observable: Observable<List<ProjectEntity>>){
+    private fun stubRemoteGetProjects(observable: Flowable<List<ProjectEntity>>){
         whenever(remote.getProjects())
                 .thenReturn(observable)
     }
