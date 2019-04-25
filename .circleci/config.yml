@@ -39,10 +39,15 @@ jobs:
           name: Download Dependencies
           command: ./gradlew androidDependencies
 
+      - run:
+          name: Accept licenses
+          command: yes | sdkmanager --licenses || true
+
+      - run:
+          name: Build
+          command: ./gradlew clean check build assembleAndroidTest
+
       - save_cache:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
-
-      # run tests!
-      - run: ./gradlew test
