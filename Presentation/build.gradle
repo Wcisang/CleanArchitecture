@@ -42,3 +42,6 @@ dependencies {
     testImplementation presentationTestDependencies.robolectric
     testImplementation presentationTestDependencies.archTesting
 }
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
