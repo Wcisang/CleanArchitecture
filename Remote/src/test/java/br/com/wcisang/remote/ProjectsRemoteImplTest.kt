@@ -10,6 +10,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import org.junit.Test
 
@@ -21,7 +22,7 @@ class ProjectsRemoteImplTest {
 
     @Test
     fun getProjectsCompletes() {
-        stubGithubTrendingServiceSearchRepositories(Observable.just(ProjectDataFactory.makeProjectsResponse()))
+        stubGithubTrendingServiceSearchRepositories(Flowable.just(ProjectDataFactory.makeProjectsResponse()))
         stubProjectsResponseModelMapperMapFromModel(any(), ProjectDataFactory.makeProjectEntity())
 
         val testObservable = remote.getProjects().test()
@@ -30,7 +31,7 @@ class ProjectsRemoteImplTest {
 
     @Test
     fun getProjectsCallsServer() {
-        stubGithubTrendingServiceSearchRepositories(Observable.just(ProjectDataFactory.makeProjectsResponse()))
+        stubGithubTrendingServiceSearchRepositories(Flowable.just(ProjectDataFactory.makeProjectsResponse()))
         stubProjectsResponseModelMapperMapFromModel(any(), ProjectDataFactory.makeProjectEntity())
 
         remote.getProjects().test()
@@ -40,7 +41,7 @@ class ProjectsRemoteImplTest {
     @Test
     fun getProjectsReturnData() {
         val response = ProjectDataFactory.makeProjectsResponse()
-        stubGithubTrendingServiceSearchRepositories(Observable.just(response))
+        stubGithubTrendingServiceSearchRepositories(Flowable.just(response))
         val entities = mutableListOf<ProjectEntity>()
         response.items.forEach {
             val entity = ProjectDataFactory.makeProjectEntity()
@@ -53,7 +54,7 @@ class ProjectsRemoteImplTest {
 
     @Test
     fun getProjectsCallsServerWithCorrectParameters() {
-        stubGithubTrendingServiceSearchRepositories(Observable.just(ProjectDataFactory.makeProjectsResponse()))
+        stubGithubTrendingServiceSearchRepositories(Flowable.just(ProjectDataFactory.makeProjectsResponse()))
         stubProjectsResponseModelMapperMapFromModel(any(), ProjectDataFactory.makeProjectEntity())
 
         remote.getProjects().test()
@@ -61,7 +62,7 @@ class ProjectsRemoteImplTest {
     }
 
 
-    private fun stubGithubTrendingServiceSearchRepositories(observable: Observable<ProjectsResponseModel>) {
+    private fun stubGithubTrendingServiceSearchRepositories(observable: Flowable<ProjectsResponseModel>) {
         whenever(service.searchRepositories(any(), any(), any()))
                 .thenReturn(observable)
     }
