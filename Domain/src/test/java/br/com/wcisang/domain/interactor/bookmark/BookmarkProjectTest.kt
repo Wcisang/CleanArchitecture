@@ -29,6 +29,7 @@ class BookmarkProjectTest {
         val testObserver = bookmarkProject.buildUseCaseCompletable(
                 BookmarkProject.Params.forProject(ProjectDataFactory.randomuid())
         ).test()
+
         testObserver.assertComplete()
     }
 
