@@ -38,7 +38,7 @@ class BrowseProjectsViewModelTest {
     fun fetchProjectsExecutesUseCase() {
         projectViewModel.fetchProjects()
 
-        verify(getProjects, times(0)).execute(any(), eq(null))
+        verify(getProjects, times(1)).execute(any(), eq(null))
     }
 
     @Test
